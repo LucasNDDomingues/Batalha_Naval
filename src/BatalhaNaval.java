@@ -10,14 +10,14 @@ public class BatalhaNaval {
 
     }
 
-    public static void iniciar(Scanner input){
+    public static void iniciar(Scanner input) {
         int numeroValido;
         do {
             mostrarMenu();
             int entrada = entradaDadosNum(input, "Escolha uma opção do Menu:");
-             numeroValido= validarEntradaMenu(entrada,input,0,3);
+            numeroValido = validarEntradaMenu(entrada, input, 0, 3);
             seletorMenu(input, numeroValido);
-        }while (numeroValido != 0);
+        } while (numeroValido != 0);
 
 
     }
@@ -70,7 +70,7 @@ public class BatalhaNaval {
         System.out.printf("╚══════════════════════════════════════╝%n");
     }
 
-    public static int entradaDadosNum (Scanner input, String texto){
+    public static int entradaDadosNum(Scanner input, String texto) {
         int entrada;
 
         System.out.println(texto);
@@ -79,10 +79,10 @@ public class BatalhaNaval {
         return entrada;
     }
 
-    public static int validarEntradaMenu (int entrada, Scanner input, int parametroA, int parametroB){
+    public static int validarEntradaMenu(int entrada, Scanner input, int parametroA, int parametroB) {
 
 
-        while (entrada < parametroA || entrada > parametroB){
+        while (entrada < parametroA || entrada > parametroB) {
             System.out.println("Digite uma opcao valida:");
             entrada = input.nextInt();
         }
@@ -90,7 +90,7 @@ public class BatalhaNaval {
         return entrada;
     }
 
-    public static String[] solicitarNome(Scanner input){
+    public static String[] solicitarNome(Scanner input) {
 
         String[] jogadores = new String[2];
 
@@ -103,16 +103,16 @@ public class BatalhaNaval {
         return jogadores;
     }
 
-    public static void seletorMenu(Scanner input,int numeroValido){
+    public static void seletorMenu(Scanner input, int numeroValido) {
 
-        switch (numeroValido){
+        switch (numeroValido) {
 
             case 0:
                 System.out.println("Saindo da batalha, até breve marujo!!");
                 break;
             case 1:
                 String[] jogadores = solicitarNome(input);
-                modoPVP(input,jogadores);
+                modoPVP(input, jogadores);
                 break;
             case 2:
                 System.out.println("teste 2");
@@ -125,7 +125,7 @@ public class BatalhaNaval {
 
     }
 
-    public static void modoPVP (Scanner input, String[] jogadores){
+    public static void modoPVP(Scanner input, String[] jogadores) {
 
         char[][] tabuleiro = criarTabuleiro();
         char[][] naviosJogador1 = criarTabuleiro();
@@ -133,18 +133,20 @@ public class BatalhaNaval {
         char[][] acertosJogador1 = criarTabuleiro();
         char[][] acertosJogador2 = criarTabuleiro();
 
+        mostrarApresentacao(jogadores, tabuleiro);
 
+        posicionarFrota(input, naviosJogador1, jogadores, 0);
 
-        mostrarApresentacao(jogadores,tabuleiro);
+        trocarJogador(input);
 
+        mostrarTabuleiro(tabuleiro);
 
-
-
+        posicionarFrota(input, naviosJogador2, jogadores, 1);
 
 
     }
 
-    public static void mostrarApresentacao(String[] jogadores, char[][] tabuleiro){
+    public static void mostrarApresentacao(String[] jogadores, char[][] tabuleiro) {
 
         System.out.printf("╔══════════════════════════════════════╗%n");
         System.out.printf("║   ⚓  BEM-VINDOS, CAPITÃES!  ⚓      %n");
@@ -177,7 +179,7 @@ public class BatalhaNaval {
 
     }
 
-    public static void mostrarTabuleiro(char[][] tabuleiro){
+    public static void mostrarTabuleiro(char[][] tabuleiro) {
 
         System.out.printf("%n");
         System.out.printf("     0  1  2  3  4  5  6  7  8  9%n");
@@ -196,11 +198,11 @@ public class BatalhaNaval {
 
     }
 
-    public  static char[][] criarTabuleiro(){
+    public static char[][] criarTabuleiro() {
 
         char[][] tabuleiro = new char[10][10];
 
-        for (int i = 0; i <tabuleiro.length; i++) {
+        for (int i = 0; i < tabuleiro.length; i++) {
 
             for (int j = 0; j < tabuleiro[i].length; j++) {
 
@@ -214,6 +216,94 @@ public class BatalhaNaval {
 
     }
 
+    public static void posicionarNavio(Scanner input, char[][] tabuleiro, int tamanho) {
+
+        int linha = entradaDadosNum(input, "Digite a posição da linha (0-9)");
+        int coluna = entradaDadosNum(input, "Digite a posição da coluna (0-9)");
+        int orientacao = validarEntradaMenu(entradaDadosNum(input, "Orientacao (1=horizontal, 2=vertical):"), input, 1, 2);
+        boolean valido = posicaoValida(tabuleiro, linha, coluna, tamanho, orientacao);
+
+        while (!valido) {
+            System.out.println("Posicao invalida! Tente novamente.");
+            linha = entradaDadosNum(input, "Digite a posição da linha (0-9)");
+            coluna = entradaDadosNum(input, "Digite a posição da coluna (0-9)");
+            orientacao = validarEntradaMenu(entradaDadosNum(input, "Orientacao (1=horizontal, 2=vertical):"), input, 1, 2);
+            valido = posicaoValida(tabuleiro, linha, coluna, tamanho, orientacao);
+        }
+
+        if (orientacao == 1) {
+            for (int i = coluna; i < coluna + tamanho; i++) {
+
+                tabuleiro[linha][i] = 'N';
+
+
+            }
+            mostrarTabuleiro(tabuleiro);
+        } else {
+            for (int i = linha; i < linha + tamanho; i++) {
+
+                tabuleiro[i][coluna] = 'N';
+
+            }
+            mostrarTabuleiro(tabuleiro);
+        }
+
+
+    }
+
+    public static void posicionarFrota(Scanner input, char[][] tabuleiro, String[] jogadores, int jogador) {
+
+        System.out.println("Capitão " + jogadores[jogador] + ", posicione sua frota!");
+
+        posicionarNavio(input, tabuleiro, 4);
+        posicionarNavio(input, tabuleiro, 3);
+        posicionarNavio(input, tabuleiro, 2);
+        posicionarNavio(input, tabuleiro, 1);
+        posicionarNavio(input, tabuleiro, 1);
+    }
+
+    public static boolean posicaoValida(char[][] tabuleiro, int linha, int coluna, int tamanho, int orientacao) {
+
+        for (int i = 0; i < tamanho; i++) {
+
+            int l;
+            int c;
+
+            if (orientacao == 1) {
+                l = linha;
+                c = coluna + i;
+            } else {
+                l = linha + i;
+                c = coluna;
+            }
+
+            if (l < 0 || l >= 10 || c < 0 || c >= 10) {
+                return false;
+            }
+
+            if (tabuleiro[l][c] == 'N') {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static void trocarJogador (Scanner input){
+
+        System.out.println("\n=================================");
+        System.out.println("Passe o computador para o próximo jogador.");
+        System.out.println("Pressione ENTER para continuar...");
+        System.out.println("=================================");
+
+        input.nextLine();
+        input.nextLine();
+
+        for (int i = 0; i < 100; i++) {
+            System.out.println();
+        }
+
+    }
 
 
 
