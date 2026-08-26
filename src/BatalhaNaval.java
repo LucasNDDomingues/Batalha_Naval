@@ -369,17 +369,17 @@ public class BatalhaNaval {
         for (int i = 0; i < acertos.length; i++) {
             for (int j = 0; j < acertos[i].length; j++) {
                 if (acertos[i][j] == 'X') {
-                    if (i - 1 >= 0 && acertos[i-1][j] != 'X' && acertos[i-1][j] != 'O') {
-                        return new int[]{i-1, j};
+                    if (i - 1 >= 0 && acertos[i - 1][j] != 'X' && acertos[i - 1][j] != 'O') {
+                        return new int[]{i - 1, j};
                     }
-                    if (i + 1 < 10 && acertos[i+1][j] != 'X' && acertos[i+1][j] != 'O') {
-                        return new int[]{i+1, j};
+                    if (i + 1 < 10 && acertos[i + 1][j] != 'X' && acertos[i + 1][j] != 'O') {
+                        return new int[]{i + 1, j};
                     }
-                    if (j - 1 >= 0 && acertos[i][j-1] != 'X' && acertos[i][j-1] != 'O') {
-                        return new int[]{i, j-1};
+                    if (j - 1 >= 0 && acertos[i][j - 1] != 'X' && acertos[i][j - 1] != 'O') {
+                        return new int[]{i, j - 1};
                     }
-                    if (j + 1 < 10 && acertos[i][j+1] != 'X' && acertos[i][j+1] != 'O') {
-                        return new int[]{i, j+1};
+                    if (j + 1 < 10 && acertos[i][j + 1] != 'X' && acertos[i][j + 1] != 'O') {
+                        return new int[]{i, j + 1};
                     }
                 }
             }
@@ -391,20 +391,20 @@ public class BatalhaNaval {
         for (int i = 0; i < acertos.length; i++) {
             for (int j = 0; j < acertos[i].length; j++) {
                 if (acertos[i][j] == 'X') {
-                    if (j + 1 < 10 && acertos[i][j+1] == 'X') {
-                        if (j + 2 < 10 && acertos[i][j+2] != 'X' && acertos[i][j+2] != 'O') {
-                            return new int[]{i, j+2};
+                    if (j + 1 < 10 && acertos[i][j + 1] == 'X') {
+                        if (j + 2 < 10 && acertos[i][j + 2] != 'X' && acertos[i][j + 2] != 'O') {
+                            return new int[]{i, j + 2};
                         }
-                        if (j - 1 >= 0 && acertos[i][j-1] != 'X' && acertos[i][j-1] != 'O') {
-                            return new int[]{i, j-1};
+                        if (j - 1 >= 0 && acertos[i][j - 1] != 'X' && acertos[i][j - 1] != 'O') {
+                            return new int[]{i, j - 1};
                         }
                     }
-                    if (i + 1 < 10 && acertos[i+1][j] == 'X') {
-                        if (i + 2 < 10 && acertos[i+2][j] != 'X' && acertos[i+2][j] != 'O') {
-                            return new int[]{i+2, j};
+                    if (i + 1 < 10 && acertos[i + 1][j] == 'X') {
+                        if (i + 2 < 10 && acertos[i + 2][j] != 'X' && acertos[i + 2][j] != 'O') {
+                            return new int[]{i + 2, j};
                         }
-                        if (i - 1 >= 0 && acertos[i-1][j] != 'X' && acertos[i-1][j] != 'O') {
-                            return new int[]{i-1, j};
+                        if (i - 1 >= 0 && acertos[i - 1][j] != 'X' && acertos[i - 1][j] != 'O') {
+                            return new int[]{i - 1, j};
                         }
                     }
                 }
